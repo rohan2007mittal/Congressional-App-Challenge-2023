@@ -81,7 +81,7 @@ class Forum(models.Model):
     leader = models.ForeignKey(User, on_delete=models.CASCADE, related_name="forums_led")
     forum_attachment = models.FileField(upload_to="forum_attachments/%Y/%m/%d/", blank=True)
     title = models.CharField(max_length=64)
-    body = models.CharField(max_length=64)
+    body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, blank=True, related_name="forum_likes")
 

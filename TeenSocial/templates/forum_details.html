@@ -19,7 +19,7 @@
         <p>Body: {{ forum.body }}</p>
         <p>Posted on: {{ forum.created_on }} by {{ forum.leader }}</p>
         <!-- forum like button -->
-        <form method="POST" action="/group/{{ group.title }}/forum/{{ forum.title }}/like/">
+        <form method="POST" action="/group/{{ group.title }}/forum/{{ forum.title }}/like/1/">
             {% csrf_token %}
             <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
                 {% if request.user in forum.likes.all %}<i class="fa-solid fa-thumbs-up">{% else %}<i class="far fa-thumbs-up">{% endif %}<span> {{ forum.likes.all.count }}</span></i>

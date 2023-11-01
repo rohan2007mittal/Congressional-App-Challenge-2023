@@ -24,7 +24,7 @@ urlpatterns = [
     path("group/<str:title>/", views.group_details, name="group_details"),
     path("group/<str:group_title>/forum/<str:forum_title>/", views.forum_details, name="forum_details"),
     path("group/<str:title>/<str:action>/", views.change_group_role, name="change_group_role"),
-    path("group/<str:group_title>/forum/<str:forum_title>/like/", views.forum_add_like, name="forum_add_like"),
+    path("group/<str:group_title>/forum/<str:forum_title>/like/<int:view>/", views.forum_add_like, name="forum_add_like"),
     path("group/<str:group_title>/forum/<str:forum_title>/<int:comment_id>/like/", views.comment_add_like, name="comment_add_like"),
 
     # forgot password links

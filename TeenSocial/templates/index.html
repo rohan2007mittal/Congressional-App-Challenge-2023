@@ -164,7 +164,7 @@
             <div style="padding: 40px;">
                 <h3>Weekly Goal</h3>
                 <!-- check if goal is editable -->
-                {% if weekly_goal.0 == typ %}
+                {% if not weekly_goal.0 %}
                     <p id="weekly_goal">This week I want to... {{ weekly_goal.1 }}</p>
                     <p class="footnote">Wait till next week to change your goal!</p>
                 {% else %}    

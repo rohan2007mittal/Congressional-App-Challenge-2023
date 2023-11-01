@@ -1,21 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-# from django.db import IntegrityError
 from django.urls import reverse
-# from django.http import HttpResponseRedirect
-
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-
 from .forms import LoginForm, CreateUserForm, CreateGroupForm, CreateForumForm, WeeklyGoalForm, DailySurveyForm, Search, SettingsForm, CommentForm
 from .models import User, Group, Forum, Survey, Affirmation, Comment
-
-from django.http import JsonResponse
-from django.views import View
 from datetime import *
 import requests
 import json
@@ -129,8 +121,6 @@ def index(request):
     if (date.today() - request.user.goal_created_on) > timedelta(days=7):
         canUpdateGoal = True
     
-    print(canUpdateGoal)
-    print(request.user.goal_created_on)
     weekly_goal = (canUpdateGoal, request.user.weekly_goal)
 
     # default values
@@ -165,7 +155,7 @@ def index(request):
         "cut_groups": cut_groups,
         "other_groups": other_groups,
         "affirmation": affirmation, 
-        "weekly_goal": weekly_goal
+        "weekly_goal": weekly_goal,
     }
     return render(request, "index.html", context)
 
@@ -811,6 +801,8 @@ def new_forum(request, title):
 def forum_details(request, group_title, forum_title):
     form = CommentForm()
     group = Group.objects.get(title=group_title)
+    print(forum_title)
+    print(group)
     forum = Forum.objects.get(title=forum_title, group=group)
     comments = Comment.objects.filter(forum=forum).order_by('-created_on')
 
@@ -850,7 +842,7 @@ def forum_details(request, group_title, forum_title):
     return render(request, 'forum_details.html', context)
 
 @login_required(login_url="login")
-def forum_add_like(request, group_title, forum_title):
+def forum_add_like(request, group_title, forum_title, view):
     group = Group.objects.get(title=group_title)
     forum = Forum.objects.get(title=forum_title, group=group)
     
@@ -870,7 +862,10 @@ def forum_add_like(request, group_title, forum_title):
     else:
         forum.likes.add(request.user)
     
-    return redirect("group_details", title=group_title)
+    # return back to correct page
+    if view == 0:
+        return redirect("group_details", title=group_title)
+    return redirect("forum_details", group_title=group_title, forum_title=forum_title)
 
 @login_required(login_url="login")
 def comment_add_like(request, group_title, forum_title, comment_id):
