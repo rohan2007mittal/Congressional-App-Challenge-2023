@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block style %}
+    #id_field {
+        width: 600px;
+    }
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+        <h1>Groups</h1>
+        <div class="mx-auto">
+            <!-- search bar code -->
+            <form action="{% url 'explore_groups' %}" class="form-inline my-2 my-lg-0" method="post" >
+                {% csrf_token %}
+                {{search.field}}
+                {{search.category}}
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-outline-primary ml-1" onclick="location.href='{% url 'new_group' %}'" type="button">Create a Group</button>
+            </form>
+        </div>
+        
+        <div class="row">
+            <div id="search_groups">
+                <h3>Keyword: "{{ title }}"</h3>
+                <h3>Filtered by: {{ category }}</h3>
+                <ul>
+                    {% for group in groups %}
+                        <li><a href="/group/{{group}}">{{ group }} ({{group.description}})</a></li>
+                        <img src='/media/{{ group.group_img }}' style="width: 50px;">
+                    {% empty %}
+                        <li>"{{ title }}" not found</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="trending">
+                <h3>Trending Groups:</h3>
+                <ol>
+                    {% for group in trending %}
+                        <!-- <li><a href="/group/{{group.1}}">{{ group }}</a></li> -->
+                        <li><a href="/group/{{group.0.1}}">{{ group.0.1 }} ({{ group.0.0 }} members)</a></li>
+                        <img src="/media/{{ group.1.group_img }}" style="width: 50px;">
+                    {% empty %}
+                        <li>No Groups</li>
+                    {% endfor %}
+                </ol>
+            </div>  
+        </div> 
+    </div> 
+{% endblock %}

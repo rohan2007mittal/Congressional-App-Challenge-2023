@@ -1,0 +1,248 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block style %}
+    span {
+        font-style: italic;
+    }
+    .category {
+        margin-left: 80px;
+    }
+{% endblock %}
+{% block body %}
+    <h1>Resources</h1>
+    <!-- search by keyword -->
+    <!-- filter by category -->
+
+    <!-- pinned resources by id of each resource-->
+
+    <!-- by default show all resources -->
+    <br>
+    <div class="category">
+        <h2>All Disorders</h2>
+        <div class="resource" id="rehab_all">
+            <span>Online Resource</span>
+            <h3><a href="https://americanaddictioncenters.org/treatment-centers">American Addiction Centers Search</a></h3>
+            <p>If you go to find rehab centers near me, there’s a cool function where you select specific criteria and it filters rehab facilities that meet those criteria.
+            </p>
+            <hr>
+        </div>
+    </div>
+    <div class="category">
+        <h2>Eating Disorders</h2>
+        <div class="resource" id="newport_eating">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/newport-academy-connecticut/">Newport Academy Connecticut</a></h3>
+            <p>Bethlehem, CT
+                Teens age 12-18
+                30-90 days
+                120-acre countryside campus
+                Insurance is accepted; cost depends on the person
+                eating disorders
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="southport_eating">
+            <span>Residential / Outpatient / Virtual Program</span>
+            <h3><a href="https://luxuryrehabs.com/center-for-discovery-southport-connecticut/">Center For Discovery Southport</a></h3>
+            <p>Southport, CT
+                10-17
+                eating disorders
+                Residential, day treatment, outpatient, virtual levels of care
+                Insurance accepted; no known price
+                4-6 weeks                
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="greenwich_eating">
+            <span>Outpatient / Virtual Program</span>
+            <h3><a href="https://luxuryrehabs.com/center-for-discovery-greenwich-connecticut/">Center For Discovery Greenwich</a></h3>
+            <p>Greenwich, CT
+                Day treatment, outpatient, and virtual levels of care
+                Typical length is 6 weeks
+                Insurance is accepted; no known price
+                eating disorder            
+            </p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2>Mental Health Disorders</h2>
+        <div class="resource" id="newport_mental">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/newport-academy-connecticut/">Newport Academy Connecticut</a></h3>
+            <p>Bethlehem, CT
+                Teens age 12-18
+                30-90 days
+                120-acre countryside campus
+                Insurance is accepted; cost depends on the person
+                eating disorders
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="discovery_mental">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/discovery-mood-stamford-connecticut/">Discovery Mood and Anxiety Program Stamford</a></h3>
+            <p>Stamford, CT
+                Teens 11-17
+                mood and anxiety disorders, trauma, self-harm
+                Residential level of care
+                30 days
+                No known price          
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="newportinstitute_mental">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/newport-institute-fairfield-connecticut/">Newport Institute Connecticut</a></h3>
+            <p>Fairfield, CT
+                mental health and addiction
+                Young adults (18-35) and their families
+                30-90 days
+                Insurance accepted; cost depends on person
+                 individual and group therapy, cognitive behavioral therapy (CBT), nutrition education, body image group, and attachment-based family therapy (ABFT)
+                Highly rated        
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="lighthouse_mental">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/the-lighthouse-connecticut/">The Lighthouse</a></h3>
+            <p>New Canaan, CT
+                $12,000 - $18,000; insurance accepted
+                56-day minimum
+                substance use and mental health disorders
+                Sober living level of care
+                gender-specific homes         
+            </p>
+            <hr>
+        </div>
+    </div>
+    <div class="category">
+        <h2>Alcohol Disorders</h2>
+        <div class="resource" id="wilton_alcohol">
+            <span>Outpatient / Virtual Program</span>
+            <h3><a href="https://luxuryrehabs.com/mountainside-wilton-connecticut/">Mountainside Wilton</a></h3>
+            <p>Wilton, CT
+                30-90 days
+                alcohol and drug addiction treatment
+                Outpatient, virtual, and detox levels of care
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="highwatch_alcohol">
+            <span>Residential / Outpatient Program</span>
+            <h3><a href="https://luxuryrehabs.com/high-watch-recovery/">High Watch Recovery Center</a></h3>
+            <p>200-acre campus
+                21-day minimum, 60-day extended program
+                alcohol and drug addiction
+                Detox, residential, sober living, and outpatient care
+                Typical cost is $15,825; insurance is accepted                         
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="bluesky_alcohol">
+            <span>Day Clinic / Outpatient Program</span>
+            <h3><a href="https://luxuryrehabs.com/blue-sky-behavioral-health-connecticut/">Blue Sky Behavioral Health</a></h3>
+            <p>Danbury, CT
+                alcohol and substance addictions as well as co-occurring mental illnesses
+                Lots of different therapies and services offered
+                Accepts most types of insurance; 
+                Sober living, day treatment, and outpatient care
+                More of a day clinic/center than an in-person facility
+                $8,000-$10,000                   
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="lighthouse_alcohol">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/the-lighthouse-connecticut/">The Lighthouse</a></h3>
+            <p>New Canaan, CT
+                $12,000 - $18,000; insurance accepted
+                56-day minimum
+                substance use and mental health disorders
+                Sober living level of care
+                gender-specific homes         
+            </p>
+            <hr>
+        </div>
+
+        <div class="resource" id="turnbridge_alcohol">
+            <span>Residential / Outpatient Program</span>
+            <h3><a href="https://luxuryrehabs.com/turnbridge/">Turnbridge</a></h3>
+            <p>New Haven, CT
+                gender-specific program
+                chemical dependency and co-occurring disorders
+                Residential, sober living, and outpatient levels of care
+                30+ days    
+            </p>
+            <hr>
+        </div>
+    </div>
+    <div class="category">
+        <h2>Trauma Disorders</h2>
+        <div class="resource" id="retreat_trauma">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/retreat-behavioral-health-south-connecticut/">Retreat Behavioral Health</a></h3>
+            <p>New Haven, CT
+                    addiction and mental health disorders as well as trauma, self-harm, pain management, and grief and loss
+                    Insurance is accepted; average cost is $1,000 a day
+                    30+ days
+                    Detox and residential levels of care 
+            </p>
+            <hr>
+        </div>
+    
+        <div class="resource" id="mountainside_trauma">
+            <span>Residential / Intensive Outpatient Program</span>
+            <h3><a href="https://luxuryrehabs.com/mountainside-treatment-center/">Mountainside Treatment Center</a></h3>
+            <p>Canaan, CT
+                    nationally acclaimed behavioral health network specializing in individualized addiction rehabilitation programs and services
+                    Levels of care include medically supervised detox, residential care, extended residential care (sober living), intensive outpatient program (IOP), outpatient program, virtual outpatient services, and adolescent services.
+                    Private insurance accepted; cost depends on person
+                    28+ days
+            </p>
+            <hr>
+        </div>
+    
+        <div class="resource" id="newportinstitute_mental">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/recovery-at-wildwood-farm-madison-connecticut/">Recovery at Wildwood Farms</a></h3>
+            <p>Madison, CT
+                    30+ days
+                    Insurance accepted; typical cost is $20,000
+                    LGTBQI+ clients; ‘queer-normative’ campus
+                    comprehensive extended care program and adventure-based activities
+                    Sober living level of care        
+            </p>
+            <hr>
+        </div>
+    
+        <div class="resource" id="lighthouse_mental">
+            <span>Residential Program</span>
+            <h3><a href="https://luxuryrehabs.com/the-lighthouse-connecticut/">The Lighthouse</a></h3>
+            <p>New Canaan, CT
+                    $12,000 - $18,000; insurance accepted
+                    56-day minimum
+                    substance use and mental health disorders
+                    Sober living level of care
+                    gender-specific homes         
+            </p>
+            <hr>
+        </div>
+    </div>
+    
+
+{% endblock %}

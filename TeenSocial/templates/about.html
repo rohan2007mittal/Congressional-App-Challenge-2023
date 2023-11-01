@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <!-- Left Content (3/4 of the total width) -->
+                <h1>RecoverTogether: <br>Empowerment Through Connection</h1>
+                <div style="padding: 20px;">
+                    <p><i>We're dedicated to facilitating transformation for people tackling addiction and mental health challenges.</i> We have a firm belief in the profound impact of social factors on recovery. 
+                        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4063778/">A 2014 study published in the National Library of Medicine</a> 
+                        was conducted with emerging adults (aged 18-24) dealing with substance use disorders.
+                         A key finding from this study was the <b>evolution of a social network</b>: through treatment combined with a social setting, participants retained and formed new relations with low-risk friends, all while decreasing more high-risk connections. This dynamic signifies the potential for positive change within social networks, which is central to our mission.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <!-- Right Content (1/4 of the total width) -->
+                <div style="padding: 20px;">
+                    {% load static %}
+                    <div style="position: absolute; top: 20%; height: 250px; width: 250px; border-radius: 50%; background-color: #E5E6E8;">
+                        <img src="{% static 'SocialApp/logo_labelsquare.png' %}" style="position: absolute; top: 5%; height: 250px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1>Our Features</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Left Content (3/4 of the total width) -->
+                <div class="features">
+                    {% load static %}
+                    <img src="{% static 'SocialApp/circle_group.png' %}" height=200>
+                    <h3>Social Platform</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Right Content (1/4 of the total width) -->
+                <div class="features">
+                    <img src="{% static 'SocialApp/circle_resources.png' %}" height=200>
+                    <h3>Resources</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Left Content (3/4 of the total width) -->
+                <div class="features">
+                    <img src="{% static 'SocialApp/circle_journal.png' %}" height=200>
+                    <h3>Journal</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br>
+    
+    <!-- 3 column layout -- social platform, resources, journal -->
+
+    
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+{% block body %}
+    <div class="w-100 p-3" style="background-color: #eee;">
+        <h1>Group: {{ group.title }}</h1>
+        <h3>Category: {{ group.get_category_display }}</h3>
+        <img src="/media/{{ group.group_img }}" style="width: 300px;">
+        <p>Description: {{ group.description }}</p>
+        <p>Created on: {{ group.created_on }}</p>
+            
+        {% if role == "admin" %}
+            <p>You are the {{ role }}</p>
+            <a href="/group/{{group}}/admin">Admin options</a>
+            <!-- admin options -- make another user admin, edit group info, kick members (i.e. trolls)  -->
+            <!--  -->
+            <br>
+            <a href="/group/{{group}}/new-forum">Create a Forum</a>
+        {% elif role == "member" %}
+            <p>You are a {{ role }}</p>
+            <a href="/group/{{group}}/leave">Leave Group</a>
+            <br>
+            <a href="/group/{{group}}/new-forum">Create a Forum</a>
+        {% else %}
+            <p>You are not in this group</p>
+            <a href="/group/{{group}}/join">Join Group</a>
+            <!-- options -- join group... -->
+        {% endif %}
+    </div>
+    <br>
+    <div class="row">
+        <div id="forums">
+            <h2>Forums</h2>
+            {% if role == "none" %}
+                <p>Join this group to view forums</p>
+            {% else %}
+                <!-- display forums -->
+                {% for forum in forums %}
+                    <h3>{{ forum.title }}</h3>
+                    <!-- <img src="/media/{{ group.group_img }}" style="width: 300px;"> -->
+                    {% if forum.forum_attachment %}
+                      <a href="/media/{{ forum.forum_attachment }}" target="_blank">View Attached File</a>
+                    {% endif %}
+                    <p>Body: {{ forum.body }}</p>
+                    <p>Posted on: {{ forum.created_on }} by {{ forum.leader }}</p>
+                    <a href="/group/{{ group.title }}/forum/{{ forum.title }}">Open Discussion</a>
+
+                    <form method="POST" action="/group/{{ group.title }}/forum/{{ forum.title }}/like/">
+                        {% csrf_token %}
+                        <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+                            {% if request.user in forum.likes.all %}<i class="fa-solid fa-thumbs-up">{% else %}<i class="far fa-thumbs-up">{% endif %}<span> {{ forum.likes.all.count }}</span></i>
+                        </button>
+                    </form>
+                    <br>
+                {% empty %}
+                    <p>Create the first forum!</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div id="group_stats">
+            <h2>Group Statistics </h3>
+            <h4>Total Days Free: {{ totalDays }} </h4>
+            <h4>{{ size.1 }} Members</h4>
+            <h4>#{{ size.0 }} Ranked</h4>
+            <br>
+            <h3>Admins:</h3>
+            <ul>
+                {% for admin in admins %}
+                    <li><a href="{% url 'profile' user=admin %}">{{ admin }}</a></li>
+                {% endfor %}    
+            </ul>
+            <h3>Leaderboards </h3>
+            <h4>Most Days Free:</h4>
+            <ol>
+                {% for user in mostDays %}
+                    <li>{{ user.0.username }} - {{ user.1 }} day streak</li>
+                {% endfor %}    
+            </ol>
+            <h4>Most Activity:</h4>
+            <ol>
+                {% for user in mostDays %}
+                    <li>{{ user.0.username }} - {{ user.1 }} activity</li>
+                {% endfor %}    
+            </ol>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#all_members">
+                See All Members
+            </button>
+            
+            <!-- Modal (popup)-->
+            <div class="modal fade" id="all_members" tabindex="-1" role="dialog" aria-labelledby="all_members_center" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="all_members_title">All Members</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            {% for member in members %}
+                                <li><a href="{% url 'profile' user=member %}">{{ member }}</a></li>
+                            {% empty %}
+                                <li>No members</li>
+                            {% endfor %}    
+                        </ul>   
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+        </div>  
+    </div>  
+
+{% endblock %}
+
+ 

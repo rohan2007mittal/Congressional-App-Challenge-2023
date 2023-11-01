@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App: Search Results
+{% endblock %}
+
+{% block body %}
+    <h1>Search Results</h1>
+
+    <ul>
+        {% for result in results %}
+            <li><a href="/group/{{result}}">{{ result }}</a></li>
+            {% empty %}
+            <li>"{{ title }}" not found</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

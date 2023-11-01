@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block body %}
+<!-- Include necessary libraries (jQuery and jQuery UI) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
+
+    <h2>Sign Up</h2>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{form.username.label}}
+        {{form.username}}
+
+        {{form.email.label}}
+        {{form.email}}
+
+        {{form.password1.label}}
+        {{form.password1}}
+
+        {{form.password2.label}}
+        {{form.password2}}
+
+        <input class="btn btn-primary" type="submit" value="Sign Up">
+        
+    </form>
+
+    {{form.errors}}
+
+    <!-- <script>
+        $(document).ready(function() {
+        $('#highschool-input').autocomplete({
+            source: "{{ autocomplete_url }}",
+            minLength: 2,
+        });
+        });
+    </script> -->
+    
+
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+
+{% endblock %}
+ 

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block style %}
+    span {
+        color: red; 
+        font-size: 12px;
+    }
+{% endblock %}
+
+{% block body %}
+    
+    <h2>Create a Forum</h2>
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.selected_group.label }} <span>*</span>
+        {{ form.selected_group }}
+
+        {{form.title.label}} <span>*</span>
+        {{form.title}}
+
+        {{form.body.label}} <span>*</span>
+        {{form.body}} 
+
+        {{ form.forum_atch.label }} <span>(optional)</span>
+        <br>
+        {{ form.forum_atch }}
+        <br><br>
+        <input class="btn btn-primary" type="submit" value="Create Forum">
+       
+    </form>
+
+
+{% endblock %}
+ 

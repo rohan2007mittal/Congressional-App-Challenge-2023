@@ -1,0 +1,228 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    Social App
+{% endblock %}
+    
+{% block style %}
+    .big-container:first-child {
+        margin-right: 20px;
+      }
+    .circle {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 5px solid lightblue;
+        margin-right: 10px;
+    }
+    .group-info {
+        flex: 3;
+        border-radius: 70px;
+        background-color: #B9BABB;
+        align-items: center;
+        padding: 10px;
+        padding-top: 50px;
+        max-height: 200px;
+        overflow: scroll;
+    }
+    .adp {
+        display: flex;
+        box-sizing: border-box;
+        flex-flow: column;
+        position: fixed;
+        z-index: 99999;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 750px;
+        height: 550px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+    }
+    .adp h3 {
+        border-bottom: 1px solid #eee;
+        margin: 0;
+        padding: 15px 0;
+    }
+    .adp p {
+         flex-grow: 1;
+    }
+    .adp input[type="submit"] {
+        display: block;
+        text-decoration: none;
+        width: 100%;
+        background-color: #366ed8;
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #ffffff;
+        border-radius: 5px;
+    }
+    .adp input[type="submit"]:hover {
+        background-color: #3368cc;
+    }
+    .adp-underlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 99998;
+    }
+    span {
+        font-weight: bold;
+    }
+
+{% endblock %}
+
+{% block body %}
+    <div class="flex-parent" style="height: 400px;">
+        <div class="big-container" >
+            <div style="padding: 60px;">
+                <!-- progress bar -->
+                <h2>Progress Bar</h2>
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar" style="width: {{streak.1}}%" role="progressbar" aria-valuenow="{{ streak.0 }}" aria-valuemin="0" aria-valuemax="{{ next_goal.0 }}">{{streak.1}}%</div>
+                </div>
+                <p>{{ streak.0 }} day streak</p>
+                <p>Your next goal is in {{ next_goal.1 }} days</p>
+                
+                <!-- 3 circles, 1 badge -->
+                {% if num_goals >= 2%}
+                    <h3>Best Badge</h3>
+                {% else %}
+                    <h3>No Badges Yet</h3>
+                {% endif %}
+
+                {% if num_goals == 2 %}
+                    <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
+                {% elif num_goals == 4 %}
+                    <img height="300" src="{% static 'SocialApp/month_badge.png' %}">
+                {% elif num_goals == 8 %}
+                    <img height="300" src="{% static 'SocialApp/year_badge.png' %}">
+                {% endif %}
+
+                <p>You've hit {{ num_goals }} goals so far!</p>
+                <p>You have saved {{ percent_year }}% of your year</p>
+                <button class="btn btn-primary" onclick="window.location.href ='{% url 'profile' user=request.user %}';">View All Stats</button>
+            </div>
+        </div>
+
+        <div class="big-container" style="height: 380px; flex: 1.1; ">
+            <div style="padding: 30px;">
+                <h2>Daily Affirmation</h3>
+                {% load static %}
+                <img src="{% static 'SocialApp/quote.png' %}">
+                <p id="affirmation">"{{ affirmation.quote }}"</p>
+                <span style="font-size: 25px;">— {{ affirmation.author }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-parent">
+        <div class="big-container" style="flex: 1.4;">
+            <div style="padding: 60px;">
+                
+                <!-- loop through groups and for each, make a circle with the title, and rectangle with some info-->
+                <h2>My Groups</h2>
+                <details id="details">
+                    <!-- not expanded -->
+                    <summary>
+                        {% for group in cut_groups %}
+                            <div class="flex-parent" style = "margin: 20px;">
+                                <img class="circle" src="/media/{{ group.group_img }}">
+                                <div class="group-info">
+                                    <a style="display: block;" href="/group/{{group}}">{{ group }}</a>
+                                    {{ group.description }}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <h2>No Groups</h2>
+                        {% endfor %}
+                    </summary>
+                    <!-- expanded -->
+                    {% for group in other_groups %}
+                        <div class="flex-parent" style = "margin: 20px;">
+                            <img class="circle" src="/media/{{ group.group_img }}">
+                            <div class="group-info">
+                                <a style="display: block;" href="/group/{{group}}">{{ group }}</a>
+                                {{ group.description }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </details>
+                <!-- only show button if there are 3+ groups -->
+                {% if other_groups %}
+                    <button id="toggle" class="btn btn-primary" onclick="toggleGroups();">See All</button>
+                {% endif %}
+            </div>
+        </div>
+        <div class="big-container" style="height: 300px;">
+            <div style="padding: 40px;">
+                <h3>Weekly Goal</h3>
+                <!-- check if goal is editable -->
+                {% if weekly_goal.0 == typ %}
+                    <p id="weekly_goal">This week I want to... {{ weekly_goal.1 }}</p>
+                    <p class="footnote">Wait till next week to change your goal!</p>
+                {% else %}    
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{form.goal}}
+                        <br>
+                        <input class="btn btn-primary" type="submit" value="Save Goal">
+                    </form>
+                    <p class="footnote">This can't be changed until next week, so be thoughtful!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        function toggleGroups() {
+            details = document.getElementById("details");
+            if (details.open) {
+                // toggle close
+                details.open = false;
+                document.getElementById("toggle").innerHTML = "See All";
+                }
+                else {
+                // toggle open
+                details.open = true;
+                document.getElementById("toggle").innerHTML = "See Less";
+                }
+            }
+    </script>
+    {% if survey %}
+        {% spaceless %}
+            <!-- define required variables in template -->
+            <script>
+                let URL = "{% url 'survey' %}";
+                let TOKEN = '{% csrf_token %}';
+                let MOOD = '{{ survey.mood }}';
+                let L_MOOD = '{{ survey.mood.label }}';
+                let CRAVING = '{{ survey.craving }}';
+                let L_CRAVING = '{{ survey.craving.label }}';
+                let TODAY = '{{ survey.today }}';
+                let L_TODAY = '{{ survey.today.label }}';
+                let MOTIVATION = '{{ survey.motivation }}';
+                let L_MOTIVATION = '{{ survey.motivation.label }}';
+                let LOG = '{{ survey.log }}';
+                let L_LOG = '{{ survey.log.label }}';
+
+
+            </script>
+
+    
+            <!-- include your js files -->
+            <script src="{% static 'SocialApp/script.js' %}"></script>
+        {% endspaceless %}
+    {% endif %}
+{% endblock %}
+

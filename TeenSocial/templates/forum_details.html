@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block body %}
+    <a href="/group/{{group}}">Back to {{ group }}</a>
+    <h3>Forum: {{ forum.title }}</h1>
+    <!-- <img src="/media/{{ group.group_img }}" style="width: 300px;"> -->
+    {% if forum.forum_attachment %}
+        <a href="/media/{{ forum.forum_attachment }}" target="_blank">View Attached File</a>
+    {% endif %}
+    <p>Body: {{ forum.body }}</p>
+    <p>Posted on: {{ forum.created_on }} by {{ forum.leader }}</p>
+    <!-- forum like button -->
+    <form method="POST" action="/group/{{ group.title }}/forum/{{ forum.title }}/like/">
+        {% csrf_token %}
+        <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+            {% if request.user in forum.likes.all %}<i class="fa-solid fa-thumbs-up">{% else %}<i class="far fa-thumbs-up">{% endif %}<span> {{ forum.likes.all.count }}</span></i>
+        </button>
+    </form>
+    <hr>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.comment }}
+        <br>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+    
+    <hr>
+    <!-- display comments -->
+    {% for comment in comments %}
+        <p><strong>{{ comment.author }}</strong> {{ comment.created_on }}</p>
+        <p>{{ comment.body }}</p>
+        <form method="POST" action="/group/{{ group.title }}/forum/{{ forum.title }}/{{ comment.id }}/like/">
+            {% csrf_token %}
+            <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+                {% if request.user in comment.likes.all %}<i class="fa-solid fa-thumbs-up">{% else %}<i class="far fa-thumbs-up">{% endif %}<span> {{ comment.likes.all.count }}</span></i>
+            </button>
+        </form>
+        <br>
+    {% endfor %}
+{% endblock %}

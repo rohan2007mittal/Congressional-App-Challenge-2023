@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Social App
+{% endblock %}
+
+{% block style %}
+    span {
+        color: red; 
+        font-size: 12px;
+    }
+{% endblock %}
+
+{% block body %}
+    
+    <h2>Create a Group</h2>
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.title.label}}<span>*</span>
+        {{form.title}}
+
+        {{form.description.label}}<span>*</span>
+        {{form.description}}
+
+        {{ form.group_img.label }}<span>(optional)</span>
+        <br>
+        {{ form.group_img }}
+        <br><br>
+        {{form.category.label}}<span>*</span>
+        {{form.category}}
+        <br>
+        <input class="btn btn-primary" type="submit" value="Create Group">
+       
+    </form>
+
+    {{ form.errors }}
+
+{% endblock %}
+ 
