@@ -6,67 +6,82 @@
 
 {% block body %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<!-- some parts are public and some private to just the user -->
-<!-- public: -->
+    <div class="container">
+        <div class="row p-4" style="background-color: #eee;">
+                <div class="col-md-3">
+                    {% load static %}
+                    <img src="/media/{{ user.profile_img }}" class="profile" style="border: 5px solid lightblue; border-radius: 50%; height: 200px; width: 200px;">
+                </div>
+                <div class="col-md-9 mt-4">
+                    <h1 style="text-align: left;">Profile: {{ user.username }}</h1>
+                    <p>{{ user.bio }}</p>
+                    {% if user.bio == "" %}
+                        <p>No Bio Added</p>
+                    {% endif %}
+                </div>
 
-    <h1>Profile: {{ user.username }}</h1>
-    {% if request.user.username == user.username %}
-        <a href="{% url 'user_settings' %}">Account Settings</a>
-        <br>
-    {% endif %}
-
-    {% load static %}
-    <img src="/media/{{ user.profile_img }}" class="profile" style="border: 5px solid lightblue; border-radius: 50%; height: 200px; width: 200px;">
-    
-
-    <h2>Bio</h2>
-    <p>{{ user.bio }}</p>
-    {% if user.bio == "" %}
-        <p>No Bio Added</p>
-    {% endif %}
-
-    {% if user.isPublic or user == request.user %}
-        <h3>User Stats</h3>
-        <h4>{{ total_days }} Total Days Free</h4>
-        <h4>{{ streak }} Day Streak</h4>
-        <h4>#{{ activity_rank.0 }} Ranked by Activity ({{ activity_rank.1 }})</h4>
-        <h4>{{ percent }}% Improved Mood</h4>
-
-        <h3>Mood Graph</h3>
-        <!-- figure out -->
-        <canvas id="moodGraph" style="width:100%;max-width:700px"></canvas>
+            {% if request.user.username == user.username %}
+                
+                <button class="btn btn-primary ml-5 mt-3" onclick="location.href='{% url 'user_settings' %}'" type="button">Account Settings</button>
+                <br>
+            {% endif %}
+        </div>
+            <br>
+            <div class="row p-4">
+                {% if user.isPublic or user == request.user %}
+                <div class="col-md-4">
+                    <h3 class="mt-2">User Stats</h3>
+                    <ul>
+                        <li><b>{{ total_days }}</b> Total Days Free</li>
+                        <li><b>{{ streak }} Day </b> Streak</li>
+                        <li><b>#{{ activity_rank.0 }} Ranked</b> by Activity ({{ activity_rank.1 }} points)</li>
+                        <li><b>{{ percent }}%</b> Change In Mood This Week</li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <!-- <h3>Mood Graph</h3> -->
+                    <!-- figure out -->
+                    <canvas id="moodGraph" style="width:100%;max-width:700px"></canvas>
+                </div>
+                </div>
+                
+                
+                <!-- get all badges -->
+                {% if num_goals >= 2 %}
+                    <h3>Badges</h3>
+                {% else %}
+                    <h3>No Badges Yet</h3>
+                <br>
+                {% endif %}
+                {% load static %}
+                {% if num_goals >= 8 %}
+                    <img height="300" src="{% static 'SocialApp/year_badge.png' %}">
+                    <img height="300" src="{% static 'SocialApp/month_badge.png' %}">
+                    <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
+                {% elif num_goals >= 4 %}
+                    <img height="300" src="{% static 'SocialApp/month_badge.png' %}">
+                    <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
+                {% elif num_goals >= 2 %}
+                    <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
+                {% endif %}
         
-        
-        <!-- get all badges -->
-        {% if num_goals >= 2 %}
-            <h3>Badges</h3>
-        {% else %}
-            <h3>No Badges Yet</h3>
-        {% endif %}
-        {% load static %}
-        {% if num_goals >= 8 %}
-            <img height="300" src="{% static 'SocialApp/year_badge.png' %}">
-            <img height="300" src="{% static 'SocialApp/month_badge.png' %}">
-            <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
-        {% elif num_goals >= 4 %}
-            <img height="300" src="{% static 'SocialApp/month_badge.png' %}">
-            <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
-        {% elif num_goals >= 2 %}
-            <img height="300" src="{% static 'SocialApp/week_badge.png' %}">
-        {% endif %}
+                <h3>Past Journal Entries</h3>
+                {% for journal in journals %}
+                <li>
+                    <ul><b>{{ journal.1 }}:</b> {{ journal.0 }}</ul>
+                </li>
+                {% endfor %}
+            
+                {% else %}
+                    <!-- image of a lock -->
+                    <p>Account is private</p>
+                {% endif %}
+            </div>
+            
+    </div>
 
-        <h3>Past Journal Entries</h3>
-        {% for journal in journals %}
-        <li>
-            <ul><b>{{ journal.1 }}:</b> {{ journal.0 }}</ul>
-        </li>
-        {% endfor %}
 
-    {% else %}
-        <!-- image of a lock -->
-        <p>Account is private</p>
-    {% endif %}
-
+   
 <!-- private: (unless there is a setting to toggle private/public)-->
     <!-- individual progress -->
     

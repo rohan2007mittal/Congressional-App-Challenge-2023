@@ -25,8 +25,8 @@
             </form>
         </div>
         
-        <div class="row">
-            <div id="search_groups">
+        <div class="row pt-4">
+            <div class="col-md-8 mt-1">
                 <h3>Keyword: "{{ title }}"</h3>
                 <h3>Filtered by: {{ category }}</h3>
                 <ul>
@@ -38,7 +38,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div id="trending">
+            <div class="col-md-4 mt-5">
                 <h3>Trending Groups:</h3>
                 <ol>
                     {% for group in trending %}

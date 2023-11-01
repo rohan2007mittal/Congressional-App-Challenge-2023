@@ -450,20 +450,16 @@ def profile(request, user):
     # if there are no surveys before this week --> (this week's average / all time) - (first survey in the week / all time average)
     week_average = 0
     week_count = 0
-    all_average = 0
     other_average = 0
     for i in range(len(daily_evals)):
         # if surveys this week
         if daily_evals[i][1] > (date.today() - timedelta(days=7)):
-            print("yes")
             if week_average == 0:
                 first = daily_evals[i][0]
-                print(daily_evals[i][0])
             week_count += 1
             week_average += daily_evals[i][0]
         else:
             other_average += daily_evals[i][0]
-        all_average += daily_evals[i][0]
 
     # prevent division by 0
     daily_count = len(daily_evals)
@@ -472,24 +468,18 @@ def profile(request, user):
     
     if week_count == 0:
         week_count = 1
-    print(week_average)
 
-    all_average = all_average / daily_count
     week_average = week_average / week_count
 
     if other_average != 0:
         other_average = other_average / (daily_count - week_count)
-    
-    print(week_average)
-    print(all_average)
-    if all_average == 0:
-        all_average = 1
 
     if other_average == 0:
-        percent = round(((week_average/all_average) - (first/all_average)) * 100, 2)
+        percent = round(week_average/first * 100 - 100, 2)
     else:
-        percent = round(((week_average/all_average) - (other_average/all_average)) * 100, 2)
-
+        percent = round(week_average/other_average * 100 - 100, 2)
+        if percent > 0:
+            percent = "+" + str(percent)
 
     # get journal entries from surveys
     journals = []

@@ -71,17 +71,6 @@ li.nav-item  {
     font-size: 15px;
     font-style: italic;
 }
-#trending {
-    float: left;
-    width: 33.33%;
-    margin-top: 50px;
-    padding-left: 50px;
-}
-#search_groups {
-    padding: 10px;
-    float: left;
-    width: 66.66%;
-}
 /* Clear floats after the columns */
 .row:after {
     content: "";
@@ -98,15 +87,6 @@ details > summary {
   }
 details > summary::-webkit-details-marker {
     display: none;
-}
-#group_stats {
-    float: left;
-    width: 33.33%;
-    margin-top: 60px;
-}
-#forums {
-    float: left;
-    width: 66.66%;
 }
 .features {
     padding: 20px;
