@@ -98,7 +98,7 @@ def index(request):
     elif len(groups_led) == 1:
         cut_groups = [groups_led[0]]
         if len(groups_joined) > 1:
-            cut_groups.append(groups_joined[0], groups_joined[1])
+            cut_groups.append([groups_joined[0], groups_joined[1]])
         elif len(groups_joined) == 1:
             cut_groups.append(groups_joined[0])
     else:
@@ -504,7 +504,6 @@ def profile(request, user):
     }
     return render(request, "profile.html", context)
     
-
 @login_required(login_url="login")
 def user_settings(request):
     # redirect to index to show survey if the user didn't fill it out on current day
